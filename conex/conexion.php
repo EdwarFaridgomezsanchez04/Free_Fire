@@ -2,7 +2,7 @@
 class database
 {
     private $hostname = "localhost";
-    private $database = "freefire";
+    private $database = "base_free"    ;
     private $username = "root";
     private $password = "";
     private $charset = "utf8";

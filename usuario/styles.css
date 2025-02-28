@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
-
 * {
     margin: 0;
     padding: 0;
@@ -14,10 +13,16 @@ body {
     height: 100vh;
     background-color: #f0f0f0;
     position: relative;
-    background-image: url('../Multimedia/callof-duty-warzone-enemigos-enmascarados-en-4k-w417c8ycvoflg2kh.webp'); /* Cambia 'Multimedia/tu-imagen.jpg' por la ruta real de tu imagen */
-    background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
-    background-position: center; /* Centra la imagen en el fondo */
-    background-repeat: no-repeat; /* Evita que la imagen se repita */
+    background-image: url('../Multimedia/callof-duty-warzone-enemigos-enmascarados-en-4k-w417c8ycvoflg2kh.webp');
+    /* Cambia 'Multimedia/tu-imagen.jpg' por la ruta real de tu imagen */
+    background-image: url('../Multimedia/Sr86.gif');
+    /* Cambia 'Multimedia/tu-imagen.jpg' por la ruta real de tu imagen */
+    background-size: cover;
+    /* Ajusta la imagen para que cubra todo el fondo */
+    background-position: center;
+    /* Centra la imagen en el fondo */
+    background-repeat: no-repeat;
+    /* Evita que la imagen se repita */
 }
 
 .container {
@@ -58,6 +63,10 @@ body {
     height: 150px;
     border-radius: 50%;
     border: 5px solid #fff;
+    width: auto;
+    height: 400px;
+    /* Altura predeterminada */
+    border: none;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -77,7 +86,8 @@ body {
 }
 
 .world-selection .form-select::after {
-    content: '\25B2'; /* Triángulo hacia arriba */
+    content: '\25B2';
+    /* Triángulo hacia arriba */
     position: absolute;
     right: 10px;
     top: 50%;
@@ -86,9 +96,76 @@ body {
 }
 
 .world-selection .form-select.open::after {
-    content: '\25BC'; /* Triángulo hacia abajo */
+    content: '\25BC';
+    /* Triángulo hacia abajo */
 }
 
 .world-selection .btn {
     width: 150px;
+}
+
+
+/* Estilo general para los select */
+
+select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    color: #333;
+    transition: all 0.3s ease-in-out;
+}
+
+
+/* Efecto hover */
+
+select:hover {
+    border-color: #0056b3;
+    background-color: #e9ecef;
+}
+
+
+/* Efecto focus (cuando se hace clic) */
+
+select:focus {
+    outline: none;
+    border-color: #004085;
+    box-shadow: 0px 0px 10px rgba(0, 91, 187, 0.5);
+}
+
+
+/* Para hacer más bonito el div que contiene los select */
+
+.world-selection {
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+}
+
+
+/* Espaciado entre selects */
+
+select+select {
+    margin-top: 10px;
+}
+
+
+/* Botón de enviar estilizado */
+
+button {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3;
 }
