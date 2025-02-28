@@ -10,7 +10,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-image: url(Multimedia/callof-duty-warzone-enemigos-enmascarados-en-4k-w417c8ycvoflg2kh.webp);
+  background-image: url(Multimedia/Sr86.gif);
   background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
   background-position: center; /* Centra la imagen en el fondo */
   background-repeat: no-repeat; /* Evita que la imagen se repita */
@@ -125,4 +125,17 @@ button {
 }
 .signUp-link p a:hover {
   text-decoration: underline;
+}
+
+
+.avatar-img {
+  width: 100px;
+  height: 100px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  border-radius: 50%;
+}
+
+.avatar-img.selected {
+  border-color: blue;
 }

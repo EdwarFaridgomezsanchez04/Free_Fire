@@ -17,35 +17,35 @@ if (isset($_POST['register'])) {
         echo '<script>window.location = "../login.php"</script>';
     }
 
-    $sql = $con->prepare("SELECT * FROM usuario WHERE Username = '$username'");  
+    $sql = $con->prepare("SELECT * FROM usuarios WHERE username = '$username'");  
     $sql->execute();
     $fila = $sql->fetch(PDO::FETCH_ASSOC);
 
     if ($fila) {
     
-        if (password_verify($passw, $fila['Contrasena']) && ($fila['rol'] == 1)) {
+        if (password_verify($passw, $fila['contrasena']) && ($fila['ID_rol'] == 1 || $fila['ID_rol'] == 2)) {
 
             $_SESSION['Id'] = $fila['Id'];
             $_SESSION['rol'] = $fila['rol'];
-            $_SESSION['type_user'] = 1;
+            $_SESSION ['username'] = $fila['username'];
+            $_SESSION ['type_user'] = $fila['ID_rol'];
+            $_SESSION ['code'] = $fila['ID_estado'];
+
 
             echo $_SESSION['Id'], $_SESSION['rol'];
 
-
             if ($_SESSION ['type_user'] == 1) {
-                header("Location: ../usuario/index.php");
+                header("Location: ../admin/index.php");
                 exit();
             }
 
             if ($_SESSION ['type_user'] == 2) {
-                header("Location: ../gestor_correspondencia/index.php");
-                exit();
-            }
-
-            if ($_SESSION ['type_user'] == 3) {
                 header("Location: ../usuario/index.php");
                 exit();
             }
+
+
+          
 
 
          
