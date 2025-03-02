@@ -1,20 +1,24 @@
 <?php
+
+
+
+require_once('../conex/conexion.php');
+$conex = new database();
+$con = $conex->conectar();
+session_start(); // Asegúrate de iniciar la sesión
+
+
+if (!isset($_SESSION['Id'])) {
+    die("Error: No se ha iniciado sesión.");
+}
+?>
+<?php
 $host = "localhost";
 $usuario = "root";
 $contrasena = "";
 $base_de_datos = "base_free";
 
 $conexion = mysqli_connect($host, $usuario, $contrasena, $base_de_datos);
-
-// Verificar la conexión
-if (!$conexion) {
-    die("Error de conexión: " . mysqli_connect_error());
-}
-
-require_once('../conex/conexion.php');
-$conex = new database();
-$con = $conex->conectar();
-session_start();
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -109,8 +113,15 @@ session_start();
                             this.disabled = true; // Desactiva el checkbox después de hacer clic
                         });
                     </script>
-                    <td><input class="btn btn-success btn-sm" type="button" value="Editar"></td>
-                    <td><input class="btn btn-danger btn-sm" type="button" value="Eliminar"></td>
+                  
+                    <td>
+                    <a href="actualizar.php" onclick="window.open('actualizar.php?id=<?php echo $resu['ID_usuario']; ?>', '', 'width=600, height=500, toolbar=NO')">
+                    <input class="btn btn-success btn-sm" type="button"  value="Editar"> </a>
+                    </td>
+                    <td>
+                        <a href="delete_user.php">
+                        <input class="btn btn-danger btn-sm" type="button" value="Eliminar"></a>
+                    </td>
                 </tr>
             <?php
                 // Incrementa la variable para el próximo número correlativo
@@ -121,7 +132,7 @@ session_start();
     </table>
 
 <div class="text-center">
-    <a class="btn btn-danger" href="cerrar_sesion.php">Cerrar Sesion</a>
+    <a class="btn btn-danger" href="../includes/salir.php">Cerrar Sesion</a>
 </div><br>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

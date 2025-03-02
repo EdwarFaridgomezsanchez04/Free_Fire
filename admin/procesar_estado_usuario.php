@@ -1,5 +1,15 @@
 <?php
 
+session_start(); // Asegúrate de iniciar la sesión
+
+require_once('../conex/conexion.php');
+$conex = new database();
+$con = $conex->conectar();
+
+if (!isset($_SESSION['Id'])) {
+    die("Error: No se ha iniciado sesión.");
+}
+
 $host = "localhost";
 $usuario = "root";
 $contrasena = "";

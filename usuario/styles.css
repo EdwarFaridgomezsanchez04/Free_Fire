@@ -14,7 +14,7 @@ body {
     height: 100vh;
     background-color: #f0f0f0;
     position: relative;
-    background-image: url('../Multimedia/Sr86.gif'); /* Cambia 'Multimedia/tu-imagen.jpg' por la ruta real de tu imagen */
+    background-image: url('../access/Sr86.gif'); /* Cambia 'Multimedia/tu-imagen.jpg' por la ruta real de tu imagen */
     background-size: cover; /* Ajusta la imagen para que cubra todo el fondo */
     background-position: center; /* Centra la imagen en el fondo */
     background-repeat: no-repeat; /* Evita que la imagen se repita */
