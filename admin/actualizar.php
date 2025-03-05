@@ -9,16 +9,14 @@ if (!isset($_SESSION['Id'])) {
     die("Error: No se ha iniciado sesión.");
 }
 
-$id = $_SESSION['Id'];
-if (!$id) {
-    die("Error: No se proporcionó el ID del usuario.");
-}
+$id = $_GET['ID_usuario'];
+
 
 $sql = $con->prepare("SELECT usuarios.*, roles.rol, estado.estado AS estado_rol FROM usuarios
     INNER JOIN roles ON usuarios.ID_rol = roles.ID_rol
     INNER JOIN estado ON usuarios.ID_estado = estado.ID_estado
-    WHERE ID_usuario = :id");
-$sql->bindParam(':id', $id, PDO::PARAM_INT);
+    WHERE ID_usuario = :ID_usuario");
+$sql->bindParam(':ID_usuario', $id, PDO::PARAM_INT);
 $sql->execute();
 $fila = $sql->fetch(PDO::FETCH_ASSOC);
 

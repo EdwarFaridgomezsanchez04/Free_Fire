@@ -45,6 +45,49 @@ body {
     font-size: 18px;
     margin-bottom: 5px;
 }
+.profile-info1 {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(350px);
+}
+
+.profile-info1 h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.profile-info1 p {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.profile-info2 {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transform: translateY(300px);
+
+}
+
+.profile-info2 h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.profile-info2 p {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
 
 .avatar {
     position: absolute;

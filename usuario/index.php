@@ -31,19 +31,31 @@ $worldSelectDisabled = ($secondWorldSelectValue !== 'world2');
 </head>
 <body>
     <div class="container">
-       <a href="perfil.php"> <div class="profile-info">
+       <a href="sala.php"> <div class="profile-info">
           
                 <h2><?php echo ($fila['username']); ?></h2>
                 <p>ID: <?php echo ($fila['ID_usuario']); ?></p>
                 <p>Nivel: <?php echo ($fila['id_nivel']); ?></p>
                 <p>Puntos: <?php echo ($fila['puntos']); ?></p>
         </div></a>
+
+
+        <div class="profile-info1">
+            <a href="">Avatares</a>
+        </div>
+
+        <div class="profile-info2">
+            <a href="">Armas</a>
+        </div>
+
+
+
         <div class="avatar">
         <img src="<?php echo htmlspecialchars($fila['avatar_imagen']); ?>" alt="Avatar del Jugador" width="400" height="400">
          
 
         </div>
-        <form method="post" action="">
+        <form method="post" action="sala.php">
             <div class="world-selection">
                 <select id="worldSelect" name=ss"worldSelect" class="form-select" <?php echo $worldSelectDisabled ? 'disabled' : ''; ?>>
                     <option value="BR">BR-Clasificatoria</option>

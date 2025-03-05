@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 28-02-2025 a las 14:46:49
+-- Tiempo de generación: 05-03-2025 a las 16:44:40
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -129,6 +129,25 @@ CREATE TABLE `mapas` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `mundo`
+--
+
+CREATE TABLE `mundo` (
+  `id_mundo` int(11) NOT NULL,
+  `mundo` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `mundo`
+--
+
+INSERT INTO `mundo` (`id_mundo`, `mundo`) VALUES
+(1, 'BR-Clasificatoria'),
+(2, 'DE-Clasificatoria');
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `nivel`
 --
 
@@ -148,15 +167,28 @@ INSERT INTO `nivel` (`id_nivel`, `nivel`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `partida`
+--
+
+CREATE TABLE `partida` (
+  `ID_jugador` int(11) NOT NULL,
+  `ID_usuario` int(10) UNSIGNED NOT NULL,
+  `ID_sala` int(10) UNSIGNED NOT NULL,
+  `puntos_partida` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `partidas`
 --
 
 CREATE TABLE `partidas` (
-  `ID_partida` int(10) UNSIGNED NOT NULL,
-  `fecha_inicio` datetime NOT NULL,
-  `fecha_fin` datetime DEFAULT NULL,
+  `ID_partida` int(10) NOT NULL,
+  `fecha_inicio` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `fecha_fin` timestamp NULL DEFAULT NULL,
   `ID_usuario` int(10) UNSIGNED NOT NULL,
-  `ID_sala` int(10) UNSIGNED NOT NULL,
+  `ID_sala` int(10) UNSIGNED DEFAULT NULL,
   `ID_arma` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -187,10 +219,11 @@ INSERT INTO `roles` (`ID_rol`, `rol`) VALUES
 
 CREATE TABLE `salas` (
   `ID_sala` int(10) UNSIGNED NOT NULL,
-  `nombre` varchar(100) NOT NULL,
-  `jugadores_maximos` int(10) UNSIGNED DEFAULT NULL CHECK (`jugadores_maximos` > 0),
+  `jugadores_actuales` int(10) UNSIGNED DEFAULT NULL,
   `nivel_requerido` int(10) UNSIGNED DEFAULT NULL CHECK (`nivel_requerido` >= 0),
-  `ID_mapa` int(10) UNSIGNED NOT NULL
+  `ID_mapa` int(10) UNSIGNED NOT NULL,
+  `estado` enum('Abierta','Llena') NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -220,18 +253,22 @@ CREATE TABLE `usuarios` (
   `ID_estado` int(10) UNSIGNED NOT NULL,
   `puntos` int(10) UNSIGNED DEFAULT 0,
   `vida` int(10) UNSIGNED DEFAULT 100,
-  `id_nivel` int(11) NOT NULL
+  `id_nivel` int(11) NOT NULL,
+  `reset_token` varchar(255) DEFAULT NULL,
+  `reset_expira` datetime DEFAULT NULL,
+  `ID_sala` int(10) UNSIGNED DEFAULT NULL,
+  `joined_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`ID_usuario`, `username`, `email`, `contrasena`, `ID_rol`, `ID_avatar`, `ID_estado`, `puntos`, `vida`, `id_nivel`) VALUES
-(475739379, 'TENIENTERADA', 'tenienterada@gmail.com', '$2y$12$kVbXtcMn/U/K5QwoPCjfHu/mRunYCnIpGO5Ko.t0v04.WdAjMDeFW', 2, 3, 1, 0, 100, 1),
-(742766878, 'moto292', 'moto292@gmail.com', '$2y$12$ibt9ZngFSHz5QVxcuFus.OkpEgcZC3RfXIsnEW0VBDVqhInGmAh0O', 2, 2, 1, 0, 100, 1),
-(3585789783, 'edwar', 'edwar@gmail.com', '$2y$12$yLZfgT4/7d/1eBrBVx59KOMS4dllsXvlSGl0IBhUmtTjtGNLYlXpe', 1, 1, 1, 0, 100, 1),
-(4294967295, 'JUANDURAN', 'JUANDURA@gmail.com', '$2y$12$crazscaVJN/tr244qA2Q5evx80olCqXMpqRT9sQSBFxdcbPImSFUm', 2, 2, 1, 0, 100, 1);
+INSERT INTO `usuarios` (`ID_usuario`, `username`, `email`, `contrasena`, `ID_rol`, `ID_avatar`, `ID_estado`, `puntos`, `vida`, `id_nivel`, `reset_token`, `reset_expira`, `ID_sala`, `joined_at`) VALUES
+(475739379, 'TENIENTERADA', 'tenienterada@gmail.com', '$2y$12$kVbXtcMn/U/K5QwoPCjfHu/mRunYCnIpGO5Ko.t0v04.WdAjMDeFW', 2, 3, 1, 0, 100, 1, NULL, NULL, NULL, '2025-03-04 22:06:30'),
+(742766878, 'moto292', 'moto292@gmail.com', '$2y$12$ibt9ZngFSHz5QVxcuFus.OkpEgcZC3RfXIsnEW0VBDVqhInGmAh0O', 1, 2, 1, 0, 100, 1, NULL, NULL, NULL, '2025-03-04 22:06:30'),
+(2892140201, 'edwar', 'edwarfaridg@gmail.com', '$2y$12$mSJb5gcLNEMxsegytT7EDufrsJgZtvbQ2wHHsFeY0WYQJslr33PP6', 2, 2, 1, 0, 100, 1, NULL, NULL, NULL, '2025-03-04 22:06:30'),
+(4294967295, 'JUANDURAN', 'JUANDURA@gmail.com', '$2y$12$crazscaVJN/tr244qA2Q5evx80olCqXMpqRT9sQSBFxdcbPImSFUm', 2, 2, 1, 0, 100, 1, NULL, NULL, NULL, '2025-03-04 22:06:30');
 
 --
 -- Índices para tablas volcadas
@@ -287,10 +324,24 @@ ALTER TABLE `mapas`
   ADD PRIMARY KEY (`ID_mapa`);
 
 --
+-- Indices de la tabla `mundo`
+--
+ALTER TABLE `mundo`
+  ADD PRIMARY KEY (`id_mundo`);
+
+--
 -- Indices de la tabla `nivel`
 --
 ALTER TABLE `nivel`
   ADD PRIMARY KEY (`id_nivel`);
+
+--
+-- Indices de la tabla `partida`
+--
+ALTER TABLE `partida`
+  ADD PRIMARY KEY (`ID_jugador`),
+  ADD KEY `ID_usuario` (`ID_usuario`),
+  ADD KEY `ID_sala` (`ID_sala`);
 
 --
 -- Indices de la tabla `partidas`
@@ -329,7 +380,8 @@ ALTER TABLE `usuarios`
   ADD KEY `ID_rol` (`ID_rol`),
   ADD KEY `ID_avatar` (`ID_avatar`),
   ADD KEY `ID_estado` (`ID_estado`),
-  ADD KEY `id_nivel` (`id_nivel`);
+  ADD KEY `id_nivel` (`id_nivel`),
+  ADD KEY `ID_sala` (`ID_sala`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -372,16 +424,10 @@ ALTER TABLE `estado`
   MODIFY `ID_estado` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de la tabla `mapas`
+-- AUTO_INCREMENT de la tabla `partida`
 --
-ALTER TABLE `mapas`
-  MODIFY `ID_mapa` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `partidas`
---
-ALTER TABLE `partidas`
-  MODIFY `ID_partida` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE `partida`
+  MODIFY `ID_jugador` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `roles`
@@ -390,22 +436,10 @@ ALTER TABLE `roles`
   MODIFY `ID_rol` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT de la tabla `salas`
---
-ALTER TABLE `salas`
-  MODIFY `ID_sala` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `tipo_armas`
 --
 ALTER TABLE `tipo_armas`
   MODIFY `ID_tipo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `usuarios`
---
-ALTER TABLE `usuarios`
-  MODIFY `ID_usuario` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4294967296;
 
 --
 -- Restricciones para tablas volcadas
@@ -439,6 +473,13 @@ ALTER TABLE `detalle_historial`
   ADD CONSTRAINT `detalle_historial_ibfk_1` FOREIGN KEY (`ID_usuario`) REFERENCES `usuarios` (`ID_usuario`) ON DELETE CASCADE;
 
 --
+-- Filtros para la tabla `partida`
+--
+ALTER TABLE `partida`
+  ADD CONSTRAINT `partida_ibfk_1` FOREIGN KEY (`ID_usuario`) REFERENCES `usuarios` (`ID_usuario`),
+  ADD CONSTRAINT `partida_ibfk_2` FOREIGN KEY (`ID_sala`) REFERENCES `salas` (`ID_sala`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Filtros para la tabla `partidas`
 --
 ALTER TABLE `partidas`
@@ -459,7 +500,8 @@ ALTER TABLE `usuarios`
   ADD CONSTRAINT `usuarios_ibfk_1` FOREIGN KEY (`ID_rol`) REFERENCES `roles` (`ID_rol`) ON DELETE CASCADE,
   ADD CONSTRAINT `usuarios_ibfk_2` FOREIGN KEY (`ID_avatar`) REFERENCES `avatar` (`ID_avatar`) ON DELETE SET NULL,
   ADD CONSTRAINT `usuarios_ibfk_3` FOREIGN KEY (`ID_estado`) REFERENCES `estado` (`ID_estado`) ON DELETE CASCADE,
-  ADD CONSTRAINT `usuarios_ibfk_4` FOREIGN KEY (`id_nivel`) REFERENCES `nivel` (`id_nivel`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `usuarios_ibfk_4` FOREIGN KEY (`id_nivel`) REFERENCES `nivel` (`id_nivel`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `usuarios_ibfk_5` FOREIGN KEY (`ID_sala`) REFERENCES `salas` (`ID_sala`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

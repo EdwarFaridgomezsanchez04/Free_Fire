@@ -16,7 +16,7 @@ $expira = $_GET['token'];
 
 
 // Verificar si el token existe en la base de datos y obtener el usuario
-$query = $conex->prepare("SELECT ID_usuario, username, email FROM usuarios WHERE reset_token = ? AND reset_expira > NOW()");
+$query = $conex->prepare("SELECT ID_usuario, username, email FROM usuarios WHERE reset_token = ? AND reset_expira >= NOW()");
 $query->execute([$token] );
 $user = $query->fetch(PDO::FETCH_ASSOC);
 
