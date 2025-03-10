@@ -1,0 +1,62 @@
+{
+    "pistolas": [
+        {
+            "nombre": "Glock-18",
+            "balas": 17,
+            "dano": 25,
+            "imagen": "imagenes/glock18.png"
+        },
+        {
+            "nombre": "Desert Eagle",
+            "balas": 7,
+            "dano": 50,
+            "imagen": "imagenes/desert_eagle.png"
+        },
+        {
+            "nombre": "USP-S",
+            "balas": 12,
+            "dano": 35,
+            "imagen": "imagenes/usps.png"
+        }
+    ],
+    "francotiradores": [
+        {
+            "nombre": "AWP",
+            "balas": 5,
+            "dano": 115,
+            "imagen": "imagenes/awp.png"
+        },
+        {
+            "nombre": "Scout",
+            "balas": 10,
+            "dano": 85,
+            "imagen": "imagenes/scout.png"
+        },
+        {
+            "nombre": "Barrett .50",
+            "balas": 5,
+            "dano": 120,
+            "imagen": "imagenes/barrett50.png"
+        }
+    ],
+    "ametralladoras": [
+        {
+            "nombre": "AK-47",
+            "balas": 30,
+            "dano": 40,
+            "imagen": "imagenes/ak47.png"
+        },
+        {
+            "nombre": "M4A1",
+            "balas": 30,
+            "dano": 35,
+            "imagen": "imagenes/m4a1.png"
+        },
+        {
+            "nombre": "MP5",
+            "balas": 25,
+            "dano": 30,
+            "imagen": "imagenes/mp5.png"
+        }
+    ]
+}

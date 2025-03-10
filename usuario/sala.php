@@ -1,45 +1,41 @@
 <?php
 session_start();
 require_once('../conex/conexion.php');
+
+// Conectar a la base de datos
 $conex = new Database();
 $con = $conex->conectar();
 
-function generateUniqueId($length = 9) {
-    $id_sala = str_pad(random_int(0, pow(9, $length) - 1), $length, '0', STR_PAD_LEFT);
-    return $id_sala;
+// Verificar si se recibe el ID de la sala
+if (!isset($_GET['idSala'])) {
+    die("Sala no especificada.");
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_SESSION['username']; // Obtenido desde la sesión
-    $id_sala = generateUniqueId();
+$idSala = $_GET['idSala'];
 
-    
-    $sqlInsert1 = $con->prepare("INSERT INTO salas (ID_sala) VALUES ($id_sala)");
+// Obtener el ID del usuario
+if (!isset($_SESSION['username'])) {
+    die("Usuario no autenticado.");
+}
 
+$username = $_SESSION['username'];
+$sqlUser = $con->prepare("SELECT ID_usuario FROM usuarios WHERE username = :username");
+$sqlUser->execute(['username' => $username]);
+$user = $sqlUser->fetch(PDO::FETCH_ASSOC);
 
+if (!$user) {
+    die("Usuario no encontrado.");
+}
 
-    // Verificar si el usuario ya está en la sala
-    $sqlCheck = $con->prepare("SELECT * FROM partidas 
-                               INNER JOIN usuarios ON partidas.ID_usuario = usuarios.ID_usuario 
-                               WHERE usuarios.username = ? AND partidas.ID_sala = ?");
-    $sqlCheck->execute([$username, $id_sala]);
+$idUsuario = $user['ID_usuario'];
 
-    if ($sqlCheck->rowCount() == 0) {
-        // Obtener el ID del usuario basado en el username
-        $sqlUser = $con->prepare("SELECT ID_usuario FROM usuarios WHERE username = ?");
-        $sqlUser->execute([$username]);
-        $user = $sqlUser->fetch(PDO::FETCH_ASSOC);
-        $id_usuario = $user['ID_usuario'];
+// Obtener detalles de la sala
+$sql = $con->prepare("SELECT * FROM salas WHERE ID_sala = :idSala");
+$sql->execute(['idSala' => $idSala]);
+$sala = $sql->fetch(PDO::FETCH_ASSOC);
 
-
-        // Insertar usuario en la sala
-         $sqlInsert = $con->prepare("INSERT INTO partida (ID_jugador, ID_usuario, ID_sala, puntos_partida) VALUES (?, ?, ?, 0)");
-        $sqlInsert->execute([$id_usuario, $id_usuario, $id_sala]);
-            echo "Usuario agregado a la sala exitosamente.";
-      
-    } else {
-        echo "El usuario ya está en esta sala.";
-    }
+if (!$sala) {
+    die("La sala no existe.");
 }
 ?>
 
@@ -48,11 +44,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unirse a una Sala</title>
+    <title>Sala <?php echo htmlspecialchars($sala['ID_sala']); ?></title>
+    <link rel="stylesheet" href="salastyles.css">
+    <script>
+        // Función para actualizar la lista de jugadores
+        function actualizarJugadores() {
+            fetch('actualizar_jugadores.php?idSala=<?php echo $idSala; ?>')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('lista-jugadores').innerHTML = data;
+                });
+        }
+
+        // Función para actualizar la capacidad de la sala
+        function actualizarCapacidad() {
+            fetch('actualizar_capacidad.php?idSala=<?php echo $idSala; ?>')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('capacidad-sala').innerText = data;
+                });
+        }
+
+        // Actualiza cada 5 segundos
+        setInterval(actualizarJugadores, 5000);
+        setInterval(actualizarCapacidad, 5000);
+
+        // Salir de la sala con AJAX
+        function salirSala() {
+            fetch('salir_sala.php?idSala=<?php echo $idSala; ?>')
+                .then(() => {
+                    window.location.href = 'index.php';
+                });
+        }
+    </script>
 </head>
 <body>
-    <form method="POST" action="">
-        ?>
-    </select>
-    <button type="submit">Unirse</button>
-</form>
+    <h2>Sala #<?php echo htmlspecialchars($sala['ID_sala']); ?></h2>
+    <p>Mapa: <?php echo htmlspecialchars($sala['ID_mapa']); ?></p>
+    <p>Modo de juego: <?php echo htmlspecialchars($sala['ID_tipo_juego']); ?></p> 
+    <p>Capacidad: <span id="capacidad-sala"><?php echo $sala['jugadores_actuales']; ?></span> / <?php echo $sala['jugadores_maximos']; ?></p>
+
+    <h3>Jugadores en la sala:</h3>
+    <ul id="lista-jugadores">
+        <!-- La lista de jugadores se actualizará con AJAX -->
+        <?php include 'actualizar_jugadores.php'; ?>
+    </ul>
+
+    <button onclick="salirSala()">Volver al menú</button>
+</body>
+</html>

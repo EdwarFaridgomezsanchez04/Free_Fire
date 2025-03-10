@@ -43,6 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperar contraseña</title>
+    <link rel="icon" type="image/x-icon" href="../access/befunky_2025-2-6_11-13-32.png">
     <link rel="stylesheet" type="text/css" href="../css/styles.css">
     <style>
         .buttons {

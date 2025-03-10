@@ -43,46 +43,56 @@ footer {
     align-items: center;
 }
 
+  
+
+  
+
 .start-button {
-    padding: 15px 30px;
-    font-size: 20px;
-    color: rgb(0, 0, 0);
-    background: rgba(255, 255, 255, 0.24);
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s;
-    margin: 10px;
+         
+        position: relative;
+        width: 150%;
+        height: 40px;
+        background: #b609ad;
+        box-shadow: 0 0 10px #b609ad;
+        font-size: 16px;
+        color: #000;
+        font-weight: 500;
+        cursor: pointer;
+        border-radius: 30px;
+        border: none;
+        outline: none;
 }
 
 .start-button:hover {
-    background: rgba(85, 85, 85, 0.9);
+    background: rgba(122, 0, 126, 0.9);
 }
 
 .mute-button {
     position: absolute;
-    top: 20px;
+    top: 0px;
     right: 20px;
     padding: 10px 20px;
     font-size: 20px;
-    color: rgb(0, 0, 0);
-    background: rgba(255, 255, 255, 0.7);
-    border: none;
+    background: #b609ad;
+    box-shadow: 0 0 10px #b609ad;
+    color: #000;
+    font-weight: 500;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    border-radius: 500px;
     transition: background 0.3s;
 }
 
 .mute-button:hover {
-    background: rgba(85, 85, 85, 0.9);
+    background: rgba(122, 0, 126, 0.9);
 }
 
 /* Estilos para los botones del formulario */
 .primary-btn {
     padding: 10px 20px;
     font-size: 16px;
-    color: #fff;
-    background-color: #007bff;
     border: none;
     cursor: pointer;
     border-radius: 5px;
